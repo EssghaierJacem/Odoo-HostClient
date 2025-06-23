@@ -41,7 +41,7 @@
     <record id="view_saas_client_form_quota" model="ir.ui.view">
         <field name="name">saas.client.form.quota</field>
         <field name="model">saas.client</field>
-        <field name="inherit_id" ref="saas_kit.saas_client_form_view"/>
+        <field name="inherit_id" ref="odoo_saas_kit.saas_client_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet/group" position="after">
                 <group string="Quotas">
