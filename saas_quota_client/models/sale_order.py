@@ -1,6 +1,7 @@
 import requests
 from odoo import models, api, _
 from odoo.exceptions import UserError
+from odoo import fields
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -22,4 +23,10 @@ class SaleOrder(models.Model):
                 if current >= max_quotations:
                     raise UserError(_("You have reached your quotation quota (%d).") % max_quotations)
         except Exception as e:
-            raise UserError(_("Could not check quota: %s") % str(e)) 
+            raise UserError(_("Could not check quota: %s") % str(e))
+
+class SaasClient(models.Model):
+    _inherit = 'saas.client'
+
+    max_quotations = fields.Integer(string="Max Quotations", default=0)
+    max_invoices = fields.Integer(string="Max Invoices", default=0) 
