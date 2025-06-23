@@ -7,6 +7,7 @@
     "depends": ["base"],
     "data": [
         "security/ir.model.access.csv",
+        "views/saas_client_quota_views.xml",
     ],
     "installable": True,
 } 

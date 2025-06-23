@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_saas_client_quota_tree" model="ir.ui.view">
+        <field name="name">saas.client.quota.tree</field>
+        <field name="model">saas.client.quota</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="client_name"/>
+                <field name="db_name"/>
+                <field name="max_quotations"/>
+                <field name="max_invoices"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_saas_client_quota_form" model="ir.ui.view">
+        <field name="name">saas.client.quota.form</field>
+        <field name="model">saas.client.quota</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="client_name"/>
+                        <field name="db_name"/>
+                        <field name="max_quotations"/>
+                        <field name="max_invoices"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_saas_client_quota" model="ir.actions.act_window">
+        <field name="name">SaaS Client Quotas</field>
+        <field name="res_model">saas.client.quota</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_saas_quota_root" name="SaaS Quota" sequence="100"/>
+    <menuitem id="menu_saas_client_quota" name="Client Quotas" parent="menu_saas_quota_root" action="action_saas_client_quota" sequence="10"/>
+</odoo> 
