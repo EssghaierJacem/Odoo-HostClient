@@ -37,4 +37,18 @@
 
     <menuitem id="menu_saas_quota_root" name="SaaS Quota" sequence="100"/>
     <menuitem id="menu_saas_client_quota" name="Client Quotas" parent="menu_saas_quota_root" action="action_saas_client_quota" sequence="10"/>
+
+    <record id="view_saas_client_form_quota" model="ir.ui.view">
+        <field name="name">saas.client.form.quota</field>
+        <field name="model">saas.client</field>
+        <field name="inherit_id" ref="saas_kit.saas_client_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group" position="after">
+                <group string="Quotas">
+                    <field name="max_quotations"/>
+                    <field name="max_invoices"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
 </odoo> 
