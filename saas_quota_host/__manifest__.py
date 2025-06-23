@@ -4,7 +4,7 @@
     "version": "1.0",
     "category": "SaaS",
     "author": "Your Company",
-    "depends": ["base"],
+    "depends": ["base", "odoo_saas_kit"],
     "data": [
         "security/ir.model.access.csv",
         "views/saas_client_quota_views.xml",
