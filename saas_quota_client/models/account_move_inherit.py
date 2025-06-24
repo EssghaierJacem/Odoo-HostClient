@@ -9,7 +9,7 @@ class AccountMove(models.Model):
         res = super().create(vals)
         plan = self.env['subscription.plan'].search([], limit=1)
         if plan:
-            left = plan.max_invoices - plan.used_invoices
+            left = plan.invoices_left
             if left <= 3:
                 color = 'danger'
                 message = _('Warning: Only %s invoices left!') % left

@@ -9,7 +9,7 @@ class SaleOrder(models.Model):
         res = super().create(vals)
         plan = self.env['subscription.plan'].search([], limit=1)
         if plan:
-            left = plan.max_quotations - plan.used_quotations
+            left = plan.quotations_left
             if left <= 3:
                 color = 'danger'
                 message = _('Warning: Only %s quotations left!') % left

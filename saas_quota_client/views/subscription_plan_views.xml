@@ -19,8 +19,10 @@
                             <h3><field name="abonnement_type"/></h3>
                             <div>Max Quotations: <field name="max_quotations"/></div>
                             <div>Quotations Used: <field name="used_quotations"/></div>
+                            <div>Quotations Left: <field name="quotations_left"/></div>
                             <div>Max Invoices: <field name="max_invoices"/></div>
                             <div>Invoices Used: <field name="used_invoices"/></div>
+                            <div>Invoices Left: <field name="invoices_left"/></div>
                             <div>Total Owed: <field name="total_owed" widget="monetary"/></div>
                         </div>
                     </t>
@@ -38,8 +40,10 @@
                         <field name="abonnement_type"/>
                         <field name="max_quotations"/>
                         <field name="used_quotations"/>
+                        <field name="quotations_left"/>
                         <field name="max_invoices"/>
                         <field name="used_invoices"/>
+                        <field name="invoices_left"/>
                         <field name="total_owed"/>
                     </group>
                 </sheet>
