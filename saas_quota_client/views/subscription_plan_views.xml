@@ -15,14 +15,14 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
-                            <h3><field name="abonnement_type"/></h3>
-                            <div>Max Quotations: <field name="max_quotations"/></div>
-                            <div>Quotations Used: <field name="used_quotations"/></div>
-                            <div>Quotations Left: <field name="quotations_left"/></div>
-                            <div>Max Invoices: <field name="max_invoices"/></div>
-                            <div>Invoices Used: <field name="used_invoices"/></div>
-                            <div>Invoices Left: <field name="invoices_left"/></div>
-                            <div>Total Owed: <field name="total_owed" widget="monetary"/></div>
+                            <h3><field name="abonnement_type" readonly="1"/></h3>
+                            <div>Max Quotations: <field name="max_quotations" readonly="1"/></div>
+                            <div>Quotations Used: <field name="used_quotations" readonly="1"/></div>
+                            <div>Quotations Left: <field name="quotations_left" readonly="1"/></div>
+                            <div>Max Invoices: <field name="max_invoices" readonly="1"/></div>
+                            <div>Invoices Used: <field name="used_invoices" readonly="1"/></div>
+                            <div>Invoices Left: <field name="invoices_left" readonly="1"/></div>
+                            <div>Total Owed: <field name="total_owed" widget="monetary" readonly="1"/></div>
                         </div>
                     </t>
                 </templates>
@@ -36,14 +36,14 @@
             <form string="Subscription Plan">
                 <sheet>
                     <group>
-                        <field name="abonnement_type"/>
-                        <field name="max_quotations"/>
-                        <field name="used_quotations"/>
-                        <field name="quotations_left"/>
-                        <field name="max_invoices"/>
-                        <field name="used_invoices"/>
-                        <field name="invoices_left"/>
-                        <field name="total_owed"/>
+                        <field name="abonnement_type" readonly="1"/>
+                        <field name="max_quotations" readonly="1"/>
+                        <field name="used_quotations" readonly="1"/>
+                        <field name="quotations_left" readonly="1"/>
+                        <field name="max_invoices" readonly="1"/>
+                        <field name="used_invoices" readonly="1"/>
+                        <field name="invoices_left" readonly="1"/>
+                        <field name="total_owed" readonly="1"/>
                     </group>
                 </sheet>
             </form>
