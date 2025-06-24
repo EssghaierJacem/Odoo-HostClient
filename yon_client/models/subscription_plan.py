@@ -7,12 +7,12 @@ class SubscriptionPlan(models.Model):
     _description = 'Subscription Plan'
     _rec_name = 'abonnement_type'
 
-    abonnement_type = fields.Char('Abonnement Type', compute='_compute_plan', store=False, readonly=True)
-    max_quotations = fields.Integer('Max Quotations', compute='_compute_plan', store=False, readonly=True)
-    max_invoices = fields.Integer('Max Invoices', compute='_compute_plan', store=False, readonly=True)
-    quotation_price = fields.Float('Quotation Price', compute='_compute_plan', store=False, readonly=True)
-    invoice_price = fields.Float('Invoice Price', compute='_compute_plan', store=False, readonly=True)
-    total_sum = fields.Float('Total Sum', compute='_compute_plan', store=False, readonly=True)
+    abonnement_type = fields.Char('Abonnement Type', readonly=True)
+    max_quotations = fields.Integer('Max Quotations', readonly=True)
+    max_invoices = fields.Integer('Max Invoices', readonly=True)
+    quotation_price = fields.Float('Quotation Price', readonly=True)
+    invoice_price = fields.Float('Invoice Price', readonly=True)
+    total_sum = fields.Float('Total Sum', readonly=True)
 
     used_quotations = fields.Integer('Quotations Used', compute='_compute_used_quotations', store=False, readonly=True)
     quotations_left = fields.Integer('Quotations Left', compute='_compute_used_quotations', store=False, readonly=True)
@@ -26,22 +26,36 @@ class SubscriptionPlan(models.Model):
             plan = self.create({})
         return plan
 
-    @api.depends()
-    def _compute_plan(self):
-        db_name = self.env.cr.dbname
+    def action_fetch_from_host(self):
+        IrConfig = self.env['ir.config_parameter'].sudo()
+        db_name = IrConfig.get_param('saas_quota_client.db_name') or self.env.cr.dbname
         api_url = "https://www.yonnovia.xyz/quota/api/v1/limits"
         try:
             resp = requests.get(f"{api_url}?db_name={db_name}", timeout=10)
             data = resp.json()
         except Exception as e:
-            data = {}
-        for rec in self:
-            rec.abonnement_type = data.get('abonnement_type', '')
-            rec.max_quotations = data.get('max_quotations', 0)
-            rec.max_invoices = data.get('max_invoices', 0)
-            rec.quotation_price = data.get('quotation_price', 0.0)
-            rec.invoice_price = data.get('invoice_price', 0.0)
-            rec.total_sum = data.get('total_sum', 0.0)
+            raise UserError(_("Failed to fetch from host: %s") % str(e))
+        plan = self
+        if not plan:
+            plan = self.create({})
+        plan.write({
+            'abonnement_type': data.get('abonnement_type', ''),
+            'max_quotations': data.get('max_quotations', 0),
+            'max_invoices': data.get('max_invoices', 0),
+            'quotation_price': data.get('quotation_price', 0.0),
+            'invoice_price': data.get('invoice_price', 0.0),
+            'total_sum': data.get('total_sum', 0.0),
+        })
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Quota Fetched'),
+                'message': _('Subscription plan updated from host.'),
+                'type': 'success',
+                'sticky': False,
+            }
+        }
 
     @api.depends('max_quotations')
     def _compute_used_quotations(self):

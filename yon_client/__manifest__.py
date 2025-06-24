@@ -1,5 +1,5 @@
 {
-    "name": "Quota Client",
+    "name": "Yon Client",
     "summary": "Enforce record quotas from host API",
     "version": "1.0",
     "category": "SaaS",
