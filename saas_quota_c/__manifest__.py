@@ -1,5 +1,5 @@
 {
-    "name": "SaaS Quota Customers",
+    "name": "SaaS Quota C",
     "summary": "Enforce record quotas from host API",
     "version": "1.0",
     "category": "SaaS",

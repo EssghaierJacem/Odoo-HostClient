@@ -28,7 +28,6 @@ class SubscriptionPlan(models.Model):
 
     @api.model
     def default_get(self, fields):
-        self.create_singleton_if_missing()
         return super().default_get(fields)
 
     def fetch_and_update_from_host(self):
