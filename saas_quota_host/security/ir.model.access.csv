@@ -2,3 +2,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_saas_client_quota,access.saas.client.quota,model_saas_client_quota,,1,1,1,1
 access_saas_quota_subscription_user,access.saas.quota.subscription.user,model_saas_quota_subscription,base.group_user,1,1,1,1
 access_saas_quota_subscription_manager,access.saas.quota.subscription.manager,model_saas_quota_subscription,base.group_system,1,1,1,1
+access_saas_abonnement_type_user,access.saas.abonnement.type.user,model_saas_abonnement_type,base.group_user,1,1,1,1
+access_saas_abonnement_type_manager,access.saas.abonnement.type.manager,model_saas_abonnement_type,base.group_system,1,1,1,1

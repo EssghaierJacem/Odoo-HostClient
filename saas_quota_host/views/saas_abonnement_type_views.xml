@@ -1,0 +1,30 @@
+<odoo>
+    <record id="view_saas_abonnement_type_tree" model="ir.ui.view">
+        <field name="name">saas.abonnement.type.tree</field>
+        <field name="model">saas.abonnement.type</field>
+        <field name="arch" type="xml">
+            <tree string="Abonnement Types">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_saas_abonnement_type_form" model="ir.ui.view">
+        <field name="name">saas.abonnement.type.form</field>
+        <field name="model">saas.abonnement.type</field>
+        <field name="arch" type="xml">
+            <form string="Abonnement Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_saas_abonnement_type" model="ir.actions.act_window">
+        <field name="name">Abonnement Types</field>
+        <field name="res_model">saas.abonnement.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_saas_abonnement_type" name="Abonnement Types" parent="menu_saas_quota_host_root" action="action_saas_abonnement_type" sequence="30"/>
+</odoo> 

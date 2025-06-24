@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_saas_client_form_inherit_quota" model="ir.ui.view">
+        <field name="name">saas.client.form.inherit.quota</field>
+        <field name="model">saas.client</field>
+        <field name="inherit_id" ref="saas_kit.saas_client_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[.//field[@name='max_quotations']]" position="replace">
+                <group string="QUOTAS">
+                    <field name="abonnement_type_id"/>
+                    <field name="max_quotations"/>
+                    <field name="max_invoices"/>
+                    <field name="quotation_price"/>
+                    <field name="invoice_price"/>
+                    <field name="total_price" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo> 
