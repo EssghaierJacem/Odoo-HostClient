@@ -9,9 +9,6 @@
         <field name="help" type="html">
             <p>No subscription plan data. Please contact your administrator or use the Sync from Host button.</p>
         </field>
-        <field name="create">false</field>
-        <field name="edit">false</field>
-        <field name="delete">false</field>
     </record>
     <menuitem id="menu_subscription_plan_dashboard" name="Dashboard" parent="menu_subscription_plan_root" action="action_subscription_plan_dashboard" sequence="20"/>
 
