@@ -42,6 +42,7 @@ class SubscriptionPlan(models.Model):
                 'max_invoices': data.get('max_invoices', 0),
                 'quotation_price': data.get('quotation_price', 0.0),
                 'invoice_price': data.get('invoice_price', 0.0),
+                'total_sum': data.get('total_sum', 0.0),
             }
             plan = self.search([], limit=1)
             if plan:
