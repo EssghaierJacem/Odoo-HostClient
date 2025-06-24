@@ -54,6 +54,9 @@
                         <field name="invoice_price" readonly="1"/>
                         <field name="total_sum" readonly="1"/>
                     </group>
+                    <footer>
+                        <button name="action_sync_from_host" type="object" string="Sync from Host" class="btn-primary"/>
+                    </footer>
                 </sheet>
             </form>
         </field>

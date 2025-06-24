@@ -55,4 +55,22 @@ class SubscriptionPlan(models.Model):
         for rec in self:
             used = self.env['account.move'].search_count([('move_type', '=', 'out_invoice')])
             rec.used_invoices = used
-            rec.invoices_left = max(rec.max_invoices - used, 0) 
+            rec.invoices_left = max(rec.max_invoices - used, 0)
+
+    def action_sync_from_host(self):
+        """Manually sync the subscription plan from the host API and update the singleton record."""
+        db_name = self.env.cr.dbname
+        api_url = "https://www.yonnovia.xyz/quota/api/v1/limits"
+        try:
+            resp = requests.get(f"{api_url}?db_name={db_name}", timeout=10)
+            data = resp.json()
+        except Exception as e:
+            raise UserError(_("Failed to sync from host: %s") % str(e))
+        self.ensure_one()
+        self.abonnement_type = data.get('abonnement_type', '')
+        self.max_quotations = data.get('max_quotations', 0)
+        self.max_invoices = data.get('max_invoices', 0)
+        self.quotation_price = data.get('quotation_price', 0.0)
+        self.invoice_price = data.get('invoice_price', 0.0)
+        self.total_sum = data.get('total_sum', 0.0)
+        return True 
