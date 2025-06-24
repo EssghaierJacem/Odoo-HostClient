@@ -1,5 +1,6 @@
 import requests
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 class SubscriptionPlan(models.Model):
     _name = 'subscription.plan'
@@ -13,10 +14,17 @@ class SubscriptionPlan(models.Model):
     invoice_price = fields.Float('Invoice Price', compute='_compute_plan', store=False, readonly=True)
     total_sum = fields.Float('Total Sum', compute='_compute_plan', store=False, readonly=True)
 
-    used_quotations = fields.Integer('Quotations Used', compute='_compute_used_quotations', store=False)
-    quotations_left = fields.Integer('Quotations Left', compute='_compute_used_quotations', store=False)
-    used_invoices = fields.Integer('Invoices Used', compute='_compute_used_invoices', store=False)
-    invoices_left = fields.Integer('Invoices Left', compute='_compute_used_invoices', store=False)
+    used_quotations = fields.Integer('Quotations Used', compute='_compute_used_quotations', store=False, readonly=True)
+    quotations_left = fields.Integer('Quotations Left', compute='_compute_used_quotations', store=False, readonly=True)
+    used_invoices = fields.Integer('Invoices Used', compute='_compute_used_invoices', store=False, readonly=True)
+    invoices_left = fields.Integer('Invoices Left', compute='_compute_used_invoices', store=False, readonly=True)
+
+    @api.model
+    def get_singleton(self):
+        plan = self.search([], limit=1)
+        if not plan:
+            plan = self.create({})
+        return plan
 
     @api.depends()
     def _compute_plan(self):
