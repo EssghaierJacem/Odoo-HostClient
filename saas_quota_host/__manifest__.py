@@ -8,6 +8,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/saas_client_quota_views.xml",
+        "views/quota_subscription_views.xml",
     ],
     "installable": True,
 } 

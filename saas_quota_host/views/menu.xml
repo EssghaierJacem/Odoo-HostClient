@@ -1,0 +1,10 @@
+<odoo>
+    <menuitem id="menu_saas_quota_host_root" name="SaaS Quota Host" sequence="10"/>
+    <menuitem id="menu_saas_quota_subscription" name="Quota Subscriptions" parent="menu_saas_quota_host_root" action="action_saas_quota_subscription" sequence="20"/>
+
+    <record id="action_saas_quota_subscription" model="ir.actions.act_window">
+        <field name="name">Quota Subscriptions</field>
+        <field name="res_model">saas.quota.subscription</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo> 

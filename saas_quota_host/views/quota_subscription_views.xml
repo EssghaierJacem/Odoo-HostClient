@@ -1,0 +1,42 @@
+<odoo>
+    <record id="view_saas_quota_subscription_tree" model="ir.ui.view">
+        <field name="name">saas.quota.subscription.tree</field>
+        <field name="model">saas.quota.subscription</field>
+        <field name="arch" type="xml">
+            <tree string="SaaS Quota Subscriptions">
+                <field name="name"/>
+                <field name="max_quotations"/>
+                <field name="max_invoices"/>
+                <field name="quotation_price"/>
+                <field name="invoice_price"/>
+                <field name="total_price"/>
+                <field name="used_quotations"/>
+                <field name="used_invoices"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_saas_quota_subscription_form" model="ir.ui.view">
+        <field name="name">saas.quota.subscription.form</field>
+        <field name="model">saas.quota.subscription</field>
+        <field name="arch" type="xml">
+            <form string="SaaS Quota Subscription">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="max_quotations"/>
+                        <field name="max_invoices"/>
+                        <field name="quotation_price"/>
+                        <field name="invoice_price"/>
+                        <field name="total_price" readonly="1"/>
+                        <field name="used_quotations" readonly="1"/>
+                        <field name="used_invoices" readonly="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_reset_usage" type="object" string="Reset Usage" class="btn-primary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo> 
