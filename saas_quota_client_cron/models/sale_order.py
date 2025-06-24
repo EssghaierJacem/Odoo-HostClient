@@ -19,5 +19,14 @@ class SaleOrder(models.Model):
             else:
                 color = 'success'
                 message = _('You have %s quotations left.') % left
-            res.env.user.notify_info(message, title=_('Quota Info'), sticky=True, type=color)
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Quota Info'),
+                    'message': message,
+                    'type': color,
+                    'sticky': True,
+                }
+            }
         return res 

@@ -4,6 +4,16 @@
         <field name="name">Subscription Plan</field>
         <field name="res_model">subscription.plan</field>
         <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="view_subscription_plan_kanban"/>
+        <field name="context">{"search_default_singleton": 1}</field>
+        <field name="view_mode">form,kanban</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p>No subscription plan data. Please contact your administrator or use the Sync from Host button.</p>
+        </field>
+        <field name="create">false</field>
+        <field name="edit">false</field>
+        <field name="delete">false</field>
     </record>
     <menuitem id="menu_subscription_plan_dashboard" name="Dashboard" parent="menu_subscription_plan_root" action="action_subscription_plan_dashboard" sequence="20"/>
 
@@ -33,7 +43,7 @@
         <field name="name">subscription.plan.form</field>
         <field name="model">subscription.plan</field>
         <field name="arch" type="xml">
-            <form string="Subscription Plan">
+            <form string="Subscription Plan" create="false" edit="false" delete="false">
                 <sheet>
                     <group>
                         <field name="abonnement_type" readonly="1"/>
