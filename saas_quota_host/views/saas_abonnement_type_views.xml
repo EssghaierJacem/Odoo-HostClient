@@ -1,4 +1,5 @@
 <odoo>
+    <menuitem id="menu_saas_quota_host_root" name="SaaS Quota Host" sequence="10"/>
     <record id="view_saas_abonnement_type_tree" model="ir.ui.view">
         <field name="name">saas.abonnement.type.tree</field>
         <field name="model">saas.abonnement.type</field>
