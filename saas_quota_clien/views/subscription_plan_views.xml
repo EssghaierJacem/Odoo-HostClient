@@ -41,19 +41,12 @@
         <field name="model">subscription.plan</field>
         <field name="arch" type="xml">
             <form string="Subscription Plan" create="false" edit="false" delete="false">
-                <header>
-                    <button name="action_sync_from_host" type="object" string="Sync from Host" class="btn-primary"/>
-                </header>
                 <sheet>
                     <group>
                         <field name="abonnement_type" readonly="1"/>
                         <field name="max_quotations" readonly="1"/>
-                        <field name="used_quotations" readonly="1"/>
-                        <field name="quotations_left" readonly="1"/>
                         <field name="quotation_price" readonly="1"/>
                         <field name="max_invoices" readonly="1"/>
-                        <field name="used_invoices" readonly="1"/>
-                        <field name="invoices_left" readonly="1"/>
                         <field name="invoice_price" readonly="1"/>
                         <field name="total_sum" readonly="1"/>
                     </group>
