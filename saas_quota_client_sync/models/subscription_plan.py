@@ -10,7 +10,9 @@ class SubscriptionPlan(models.Model):
     abonnement_type = fields.Char('Abonnement Type')
     max_quotations = fields.Integer('Max Quotations')
     max_invoices = fields.Integer('Max Invoices')
-    total_owed = fields.Float('Total Owed')
+    quotation_price = fields.Float('Quotation Price')
+    invoice_price = fields.Float('Invoice Price')
+    total_sum = fields.Float('Total Sum', compute='_compute_total_sum', store=False)
 
     used_quotations = fields.Integer('Quotations Used', compute='_compute_used_quotations', store=False)
     quotations_left = fields.Integer('Quotations Left', compute='_compute_used_quotations', store=False)
@@ -27,7 +29,8 @@ class SubscriptionPlan(models.Model):
                 'abonnement_type': data.get('abonnement_type'),
                 'max_quotations': data.get('max_quotations', 0),
                 'max_invoices': data.get('max_invoices', 0),
-                'total_owed': data.get('total_owed', 0.0),
+                'quotation_price': data.get('quotation_price', 0.0),
+                'invoice_price': data.get('invoice_price', 0.0),
             }
             plan = self.search([], limit=1)
             if plan:
@@ -53,6 +56,11 @@ class SubscriptionPlan(models.Model):
     @api.model
     def cron_sync_subscription_plan(self):
         self.search([]).fetch_and_update_from_host()
+
+    @api.depends('max_quotations', 'quotation_price')
+    def _compute_total_sum(self):
+        for rec in self:
+            rec.total_sum = (rec.max_quotations * rec.quotation_price) + (rec.max_invoices * rec.invoice_price)
 
     @api.depends('max_quotations')
     def _compute_used_quotations(self):

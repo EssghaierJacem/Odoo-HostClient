@@ -3,10 +3,9 @@
     <record id="action_subscription_plan_dashboard" model="ir.actions.act_window">
         <field name="name">Subscription Plan</field>
         <field name="res_model">subscription.plan</field>
-        <field name="view_mode">kanban,form</field>
+        <field name="view_mode">form,kanban</field>
         <field name="view_id" ref="view_subscription_plan_kanban"/>
         <field name="context">{"search_default_singleton": 1}</field>
-        <field name="view_mode">form,kanban</field>
         <field name="target">current</field>
         <field name="help" type="html">
             <p>No subscription plan data. Please contact your administrator or use the Sync from Host button.</p>
@@ -29,10 +28,12 @@
                             <div>Max Quotations: <field name="max_quotations" readonly="1"/></div>
                             <div>Quotations Used: <field name="used_quotations" readonly="1"/></div>
                             <div>Quotations Left: <field name="quotations_left" readonly="1"/></div>
+                            <div>Quotation Price: <field name="quotation_price" readonly="1"/></div>
                             <div>Max Invoices: <field name="max_invoices" readonly="1"/></div>
                             <div>Invoices Used: <field name="used_invoices" readonly="1"/></div>
                             <div>Invoices Left: <field name="invoices_left" readonly="1"/></div>
-                            <div>Total Owed: <field name="total_owed" widget="monetary" readonly="1"/></div>
+                            <div>Invoice Price: <field name="invoice_price" readonly="1"/></div>
+                            <div>Total Sum: <field name="total_sum" widget="monetary" readonly="1"/></div>
                         </div>
                     </t>
                 </templates>
@@ -50,10 +51,12 @@
                         <field name="max_quotations" readonly="1"/>
                         <field name="used_quotations" readonly="1"/>
                         <field name="quotations_left" readonly="1"/>
+                        <field name="quotation_price" readonly="1"/>
                         <field name="max_invoices" readonly="1"/>
                         <field name="used_invoices" readonly="1"/>
                         <field name="invoices_left" readonly="1"/>
-                        <field name="total_owed" readonly="1"/>
+                        <field name="invoice_price" readonly="1"/>
+                        <field name="total_sum" readonly="1"/>
                     </group>
                     <footer>
                         <button name="action_sync_from_host" type="object" string="Sync from Host" class="btn-primary"/>
