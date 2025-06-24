@@ -30,6 +30,13 @@ class SubscriptionPlan(models.Model):
     def default_get(self, fields):
         return super().default_get(fields)
 
+    @api.model
+    def get_or_create_singleton(self):
+        plan = self.search([], limit=1)
+        if not plan:
+            plan = self.create({})
+        return plan
+
     def fetch_and_update_from_host(self):
         db_name = self.env.cr.dbname
         api_url = self.env['ir.config_parameter'].sudo().get_param('saas_quota_host.api_url') or "https://www.yonnovia.xyz/quota/api/v1/limits"
@@ -44,11 +51,8 @@ class SubscriptionPlan(models.Model):
                 'invoice_price': data.get('invoice_price', 0.0),
                 'total_sum': data.get('total_sum', 0.0),
             }
-            plan = self.search([], limit=1)
-            if plan:
-                plan.write(vals)
-            else:
-                self.create(vals)
+            plan = self.get_or_create_singleton()
+            plan.write(vals)
         except Exception as e:
             raise UserError(_('Could not fetch subscription plan from host: %s') % str(e))
 
