@@ -1,0 +1,49 @@
+<odoo>
+    <menuitem id="menu_subscription_plan_root" name="Subscription Plan" sequence="10"/>
+    <record id="action_subscription_plan_dashboard" model="ir.actions.act_window">
+        <field name="name">Subscription Plan</field>
+        <field name="res_model">subscription.plan</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="view_subscription_plan_kanban"/>
+    </record>
+    <menuitem id="menu_subscription_plan_dashboard" name="Dashboard" parent="menu_subscription_plan_root" action="action_subscription_plan_dashboard" sequence="20"/>
+
+    <record id="view_subscription_plan_kanban" model="ir.ui.view">
+        <field name="name">subscription.plan.kanban</field>
+        <field name="model">subscription.plan</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="abonnement_type">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <h3><field name="abonnement_type"/></h3>
+                            <div>Max Quotations: <field name="max_quotations"/></div>
+                            <div>Quotations Used: <field name="used_quotations"/></div>
+                            <div>Max Invoices: <field name="max_invoices"/></div>
+                            <div>Invoices Used: <field name="used_invoices"/></div>
+                            <div>Total Owed: <field name="total_owed" widget="monetary"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="view_subscription_plan_form" model="ir.ui.view">
+        <field name="name">subscription.plan.form</field>
+        <field name="model">subscription.plan</field>
+        <field name="arch" type="xml">
+            <form string="Subscription Plan">
+                <sheet>
+                    <group>
+                        <field name="abonnement_type"/>
+                        <field name="max_quotations"/>
+                        <field name="used_quotations"/>
+                        <field name="max_invoices"/>
+                        <field name="used_invoices"/>
+                        <field name="total_owed"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo> 

@@ -5,6 +5,9 @@
     "category": "SaaS",
     "author": "Your Company",
     "depends": ["sale", "account"],
-    "data": [],
+    "data": [
+        'security/ir.model.access.csv',
+        'views/subscription_plan_views.xml',
+    ],
     "installable": True,
 } 
