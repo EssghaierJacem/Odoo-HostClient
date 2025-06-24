@@ -1,4 +1,6 @@
-from odoo import models, fields, api
+import requests
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 class SubscriptionPlan(models.Model):
     _name = 'subscription.plan'
@@ -15,20 +17,42 @@ class SubscriptionPlan(models.Model):
     used_invoices = fields.Integer('Invoices Used', compute='_compute_used_invoices', store=False)
     invoices_left = fields.Integer('Invoices Left', compute='_compute_used_invoices', store=False)
 
-    @api.model
-    def update_from_api(self, api_data):
-        plan = self.search([], limit=1)
-        vals = {
-            'abonnement_type': api_data.get('abonnement_type'),
-            'max_quotations': api_data.get('max_quotations', 0),
-            'max_invoices': api_data.get('max_invoices', 0),
-            'total_owed': api_data.get('total_owed', 0.0),
+    def fetch_and_update_from_host(self):
+        db_name = self.env.cr.dbname
+        api_url = self.env['ir.config_parameter'].sudo().get_param('saas_quota_host.api_url') or "https://www.yonnovia.xyz/quota/api/v1/limits"
+        try:
+            resp = requests.get(f"{api_url}?db_name={db_name}", timeout=10)
+            data = resp.json()
+            vals = {
+                'abonnement_type': data.get('abonnement_type'),
+                'max_quotations': data.get('max_quotations', 0),
+                'max_invoices': data.get('max_invoices', 0),
+                'total_owed': data.get('total_owed', 0.0),
+            }
+            plan = self.search([], limit=1)
+            if plan:
+                plan.write(vals)
+            else:
+                self.create(vals)
+        except Exception as e:
+            raise UserError(_('Could not fetch subscription plan from host: %s') % str(e))
+
+    def action_sync_from_host(self):
+        self.fetch_and_update_from_host()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Subscription Plan Updated'),
+                'message': _('The subscription plan has been updated from the host.'),
+                'type': 'success',
+                'sticky': False,
+            }
         }
-        if plan:
-            plan.write(vals)
-        else:
-            plan = self.create(vals)
-        return plan
+
+    @api.model
+    def cron_sync_subscription_plan(self):
+        self.search([]).fetch_and_update_from_host()
 
     @api.depends('max_quotations')
     def _compute_used_quotations(self):
