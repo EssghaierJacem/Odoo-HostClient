@@ -19,6 +19,18 @@ class SubscriptionPlan(models.Model):
     used_invoices = fields.Integer('Invoices Used', compute='_compute_used_invoices', store=False)
     invoices_left = fields.Integer('Invoices Left', compute='_compute_used_invoices', store=False)
 
+    @api.model
+    def create_singleton_if_missing(self):
+        plan = self.search([], limit=1)
+        if not plan:
+            plan = self.create({})
+        return plan
+
+    @api.model
+    def default_get(self, fields):
+        self.create_singleton_if_missing()
+        return super().default_get(fields)
+
     def fetch_and_update_from_host(self):
         db_name = self.env.cr.dbname
         api_url = self.env['ir.config_parameter'].sudo().get_param('saas_quota_host.api_url') or "https://www.yonnovia.xyz/quota/api/v1/limits"
@@ -57,7 +69,7 @@ class SubscriptionPlan(models.Model):
     def cron_sync_subscription_plan(self):
         self.search([]).fetch_and_update_from_host()
 
-    @api.depends('max_quotations', 'quotation_price')
+    @api.depends('max_quotations', 'quotation_price', 'max_invoices', 'invoice_price')
     def _compute_total_sum(self):
         for rec in self:
             rec.total_sum = (rec.max_quotations * rec.quotation_price) + (rec.max_invoices * rec.invoice_price)
