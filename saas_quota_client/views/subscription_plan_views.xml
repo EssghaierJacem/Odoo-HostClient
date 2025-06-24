@@ -4,7 +4,6 @@
         <field name="name">Subscription Plan</field>
         <field name="res_model">subscription.plan</field>
         <field name="view_mode">kanban,form</field>
-        <field name="view_id" ref="view_subscription_plan_kanban"/>
     </record>
     <menuitem id="menu_subscription_plan_dashboard" name="Dashboard" parent="menu_subscription_plan_root" action="action_subscription_plan_dashboard" sequence="20"/>
 
