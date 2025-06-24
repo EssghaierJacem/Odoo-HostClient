@@ -1,11 +1,12 @@
 <odoo>
-    <menuitem id="menu_saas_quota_host_root" name="SaaS Quota Host" sequence="10"/>
+    <menuitem id="menu_saas_quota_host_root" name="Quotations Subscription" sequence="10"/>
     <record id="view_saas_abonnement_type_tree" model="ir.ui.view">
         <field name="name">saas.abonnement.type.tree</field>
         <field name="model">saas.abonnement.type</field>
         <field name="arch" type="xml">
-            <tree string="Abonnement Types">
+            <tree string="Abonnements">
                 <field name="name"/>
+                <field name="client_ids"/>
             </tree>
         </field>
     </record>
@@ -18,14 +19,28 @@
                     <group>
                         <field name="name"/>
                     </group>
+                    <notebook>
+                        <page string="Clients">
+                            <field name="client_ids">
+                                <tree string="Clients">
+                                    <field name="name"/>
+                                    <field name="max_quotations"/>
+                                    <field name="quotation_price"/>
+                                    <field name="max_invoices"/>
+                                    <field name="invoice_price"/>
+                                    <field name="total_price"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
     </record>
     <record id="action_saas_abonnement_type" model="ir.actions.act_window">
-        <field name="name">Abonnement Types</field>
+        <field name="name">Abonnements</field>
         <field name="res_model">saas.abonnement.type</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <menuitem id="menu_saas_abonnement_type" name="Abonnement Types" parent="menu_saas_quota_host_root" action="action_saas_abonnement_type" sequence="30"/>
+    <menuitem id="menu_saas_abonnement_type" name="Abonnements" parent="menu_saas_quota_host_root" action="action_saas_abonnement_type" sequence="30"/>
 </odoo> 
