@@ -4,7 +4,6 @@
         <field name="name">Subscription Plan</field>
         <field name="res_model">subscription.plan</field>
         <field name="view_mode">form,kanban</field>
-        <field name="view_id" ref="view_subscription_plan_kanban"/>
         <field name="context">{"search_default_singleton": 1}</field>
         <field name="target">current</field>
         <field name="help" type="html">
