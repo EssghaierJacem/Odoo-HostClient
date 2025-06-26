@@ -1,0 +1,49 @@
+<odoo>
+    <!-- Vue Formulaire -->
+    <record id="view_custom_quotation_form" model="ir.ui.view">
+        <field name="name">custom.quotation.form</field>
+        <field name="model">custom.quotation</field>
+        <field name="arch" type="xml">
+            <form string="Devis Personnalisé">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="customer_name"/>
+                        <field name="quotation_date"/>
+                        <field name="amount_total"/>
+                        <field name="state"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste -->
+    <record id="view_custom_quotation_tree" model="ir.ui.view">
+        <field name="name">custom.quotation.tree</field>
+        <field name="model">custom.quotation</field>
+        <field name="arch" type="xml">
+            <tree string="Devis Personnalisés">
+                <field name="name"/>
+                <field name="customer_name"/>
+                <field name="amount_total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action pour ouvrir la vue -->
+    <record id="action_custom_quotation" model="ir.actions.act_window">
+        <field name="name">Devis Personnalisés</field>
+        <field name="res_model">custom.quotation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu principal -->
+    <menuitem id="menu_custom_quotation_root" name="Devis Personnalisés" sequence="10"/>
+
+    <!-- Menu pour accéder aux Devis -->
+    <menuitem id="menu_custom_quotation" name="Gérer les Devis"
+              parent="menu_custom_quotation_root"
+              action="action_custom_quotation" sequence="20"/>
+</odoo>
