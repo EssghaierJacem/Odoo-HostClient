@@ -1,0 +1,43 @@
+<odoo>
+    <record id="view_subscription_plan_tree" model="ir.ui.view">
+        <field name="name">subscription.plan.tree</field>
+        <field name="model">subscription.plan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="base_price"/>
+                <field name="free_sales_orders"/>
+                <field name="free_invoices"/>
+                <field name="price_per_extra_so"/>
+                <field name="price_per_extra_invoice"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_subscription_plan_form" model="ir.ui.view">
+        <field name="name">subscription.plan.form</field>
+        <field name="model">subscription.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="base_price"/>
+                        <field name="free_sales_orders"/>
+                        <field name="free_invoices"/>
+                        <field name="price_per_extra_so"/>
+                        <field name="price_per_extra_invoice"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <menuitem id="menu_subscription_quota_root" name="Subscription Quota" sequence="100"/>
+    <menuitem id="menu_subscription_plan" name="Plans" parent="menu_subscription_quota_root" action="action_subscription_plan" sequence="10"/>
+    <record id="action_subscription_plan" model="ir.actions.act_window">
+        <field name="name">Subscription Plans</field>
+        <field name="res_model">subscription.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo> 
