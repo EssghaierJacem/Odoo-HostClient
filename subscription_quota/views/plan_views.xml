@@ -33,11 +33,11 @@
             </form>
         </field>
     </record>
-    <menuitem id="menu_subscription_quota_root" name="Subscription Quota" sequence="100"/>
-    <menuitem id="menu_subscription_plan" name="Plans" parent="menu_subscription_quota_root" action="action_subscription_plan" sequence="10"/>
     <record id="action_subscription_plan" model="ir.actions.act_window">
         <field name="name">Subscription Plans</field>
         <field name="res_model">subscription.plan</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <menuitem id="menu_subscription_quota_root" name="Subscription Quota" sequence="100"/>
+    <menuitem id="menu_subscription_plan" name="Plans" parent="menu_subscription_quota_root" action="action_subscription_plan" sequence="10"/>
 </odoo> 
