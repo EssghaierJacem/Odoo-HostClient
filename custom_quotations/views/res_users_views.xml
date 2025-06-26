@@ -1,0 +1,25 @@
+<odoo>
+    <!-- Injection dans Form View (Edition User) -->
+    <record id="view_users_form_inherit_subscription_type" model="ir.ui.view">
+        <field name="name">res.users.form.subscription.type</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="subscription_type"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Injection dans Tree View (Liste Users) -->
+    <record id="view_users_tree_inherit_subscription_type" model="ir.ui.view">
+        <field name="name">res.users.tree.inherit.subscription.type</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='login']" position="after">
+                <field name="subscription_type"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
