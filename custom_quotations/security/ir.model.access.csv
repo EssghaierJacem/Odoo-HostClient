@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_custom_quotation,access_custom_quotation,model_custom_quotation,,1,1,1,1
-access_user_usage_tracker_user,user.usage.tracker.user,model_user_usage_tracker,sales_team.group_sale_salesman,1,1,1,0
-access_user_usage_tracker_manager,user.usage.tracker.manager,model_user_usage_tracker,sales_team.group_sale_manager,1,1,1,1
