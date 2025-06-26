@@ -15,10 +15,10 @@
             </tree>
         </field>
     </record>
-    <menuitem id="menu_subscription_usage" name="Usage" parent="menu_subscription_quota_root" action="action_subscription_usage" sequence="20"/>
     <record id="action_subscription_usage" model="ir.actions.act_window">
         <field name="name">Subscription Usage</field>
         <field name="res_model">subscription.usage</field>
         <field name="view_mode">tree</field>
     </record>
+    <menuitem id="menu_subscription_usage" name="Usage" parent="menu_subscription_quota_root" action="action_subscription_usage" sequence="20"/>
 </odoo> 
