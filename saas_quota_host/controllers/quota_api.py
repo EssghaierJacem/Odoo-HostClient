@@ -14,12 +14,8 @@ class QuotaAPI(http.Controller):
             )
         return http.Response(
             json.dumps({
-                "abonnement_type": client.abonnement_type_id.name if client.abonnement_type_id else None,
                 "max_quotations": client.max_quotations,
-                "max_invoices": client.max_invoices,
-                "quotation_price": client.quotation_price,
-                "invoice_price": client.invoice_price,
-                "total_sum": client.total_price,
+                "max_invoices": client.max_invoices
             }),
             content_type='application/json'
         ) 
