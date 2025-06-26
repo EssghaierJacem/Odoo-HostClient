@@ -6,12 +6,7 @@
     "author": "Your Company",
     "depends": ["sale", "account"],
     "data": [
-        "views/saas_quota_client_dashboard.xml"
+        "views/quota_info_wizard.xml"
     ],
-    "assets": {
-        "web.assets_backend": [
-            "saas_quota_client/static/src/js/saas_quota_client_dashboard.js",
-        ],
-    },
     "installable": True,
 } 
