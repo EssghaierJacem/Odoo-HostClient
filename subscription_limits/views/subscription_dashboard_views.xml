@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Subscription Dashboard Form View -->
+        <record id="view_subscription_dashboard_form" model="ir.ui.view">
+            <field name="name">subscription.dashboard.form</field>
+            <field name="model">subscription.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Subscription Dashboard" create="false" edit="false">
+                    <sheet>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3>Welcome to Your Subscription Dashboard</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="subscription-info">
+                                                    <h4>Current Plan: <field name="subscription_plan_name"/></h4>
+                                                    <p>Status: <field name="subscription_state"/></p>
+                                                    <p>Start Date: <field name="subscription_start_date"/></p>
+                                                    <p>End Date: <field name="subscription_end_date"/></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="usage-summary">
+                                                    <h4>Usage Summary</h4>
+                                                    <div class="usage-item">
+                                                        <span>Sales Orders: </span>
+                                                        <field name="subscription_sales_orders_count"/> / <field name="subscription_plan_max_sales_orders"/>
+                                                    </div>
+                                                    <div class="usage-item">
+                                                        <span>Invoices: </span>
+                                                        <field name="subscription_invoices_count"/> / <field name="subscription_plan_max_invoices"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Sales Orders Usage</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar">
+                                                <field name="subscription_sales_orders_count"/> / <field name="subscription_plan_max_sales_orders"/>
+                                            </div>
+                                        </div>
+                                        <p class="mt-2">
+                                            <field name="subscription_sales_orders_remaining"/> remaining
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Invoices Usage</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar">
+                                                <field name="subscription_invoices_count"/> / <field name="subscription_plan_max_invoices"/>
+                                            </div>
+                                        </div>
+                                        <p class="mt-2">
+                                            <field name="subscription_invoices_remaining"/> remaining
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Quick Actions</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <button name="action_view_subscriptions" type="object" 
+                                                string="View My Subscriptions" class="btn btn-primary"/>
+                                        <button name="action_view_plans" type="object" 
+                                                string="View Available Plans" class="btn btn-success"/>
+                                        <button name="action_view_usage_report" type="object" 
+                                                string="Usage Report" class="btn btn-info"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Subscription Dashboard Action -->
+        <record id="action_subscription_dashboard" model="ir.actions.act_window">
+            <field name="name">Subscription Dashboard</field>
+            <field name="res_model">subscription.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_subscription_dashboard_form"/>
+        </record>
+    </data>
+</odoo> 

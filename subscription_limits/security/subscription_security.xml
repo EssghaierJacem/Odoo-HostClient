@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Subscription Plan Security -->
+        <record id="subscription_plan_rule_admin" model="ir.rule">
+            <field name="name">Subscription Plan: Admin Access</field>
+            <field name="model_id" ref="model_subscription_plan"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+
+        <record id="subscription_plan_rule_user" model="ir.rule">
+            <field name="name">Subscription Plan: User Access</field>
+            <field name="model_id" ref="model_subscription_plan"/>
+            <field name="domain_force">[('active', '=', True)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- Subscription User Security -->
+        <record id="subscription_user_rule_admin" model="ir.rule">
+            <field name="name">Subscription User: Admin Access</field>
+            <field name="model_id" ref="model_subscription_user"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+
+        <record id="subscription_user_rule_user" model="ir.rule">
+            <field name="name">Subscription User: Own Subscriptions</field>
+            <field name="model_id" ref="model_subscription_user"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- Manager can see all subscriptions -->
+        <record id="subscription_user_rule_manager" model="ir.rule">
+            <field name="name">Subscription User: Manager Access</field>
+            <field name="model_id" ref="model_subscription_user"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+        </record>
+    </data>
+</odoo> 

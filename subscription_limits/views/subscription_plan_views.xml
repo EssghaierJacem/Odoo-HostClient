@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Subscription Plan Tree View -->
+        <record id="view_subscription_plan_tree" model="ir.ui.view">
+            <field name="name">subscription.plan.tree</field>
+            <field name="model">subscription.plan</field>
+            <field name="arch" type="xml">
+                <tree string="Subscription Plans" decoration-info="active == False">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="max_sales_orders" widget="integer"/>
+                    <field name="max_invoices" widget="integer"/>
+                    <field name="price" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="duration_type"/>
+                    <field name="user_count" widget="integer"/>
+                    <field name="total_revenue" widget="monetary"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Subscription Plan Form View -->
+        <record id="view_subscription_plan_form" model="ir.ui.view">
+            <field name="name">subscription.plan.form</field>
+            <field name="model">subscription.plan</field>
+            <field name="arch" type="xml">
+                <form string="Subscription Plan">
+                    <header>
+                        <button name="action_view_users" type="object" 
+                                string="View Users" class="btn-primary"
+                                invisible="user_count == 0"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Plan Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                                <field name="duration_type"/>
+                            </group>
+                            <group>
+                                <field name="price" widget="monetary"/>
+                                <field name="currency_id"/>
+                                <field name="color" widget="color"/>
+                                <field name="icon"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Limits" name="limits">
+                                <group>
+                                    <group string="Sales Orders">
+                                        <field name="max_sales_orders" help="0 means unlimited"/>
+                                    </group>
+                                    <group string="Invoices">
+                                        <field name="max_invoices" help="0 means unlimited"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Description" name="description">
+                                <field name="description" placeholder="Describe the plan features and benefits..."/>
+                            </page>
+                            <page string="Features" name="features">
+                                <field name="features" placeholder="List the features included in this plan..."/>
+                            </page>
+                            <page string="Statistics" name="statistics">
+                                <group>
+                                    <group string="Usage">
+                                        <field name="user_count" readonly="1"/>
+                                        <field name="total_revenue" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Subscription Plan Kanban View -->
+        <record id="view_subscription_plan_kanban" model="ir.ui.view">
+            <field name="name">subscription.plan.kanban</field>
+            <field name="model">subscription.plan</field>
+            <field name="arch" type="xml">
+                <kanban string="Subscription Plans" class="o_kanban_small_column" 
+                        default_group_by="active" 
+                        sample="1">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="price"/>
+                    <field name="currency_id"/>
+                    <field name="max_sales_orders"/>
+                    <field name="max_invoices"/>
+                    <field name="user_count"/>
+                    <field name="total_revenue"/>
+                    <field name="color"/>
+                    <field name="icon"/>
+                    <field name="active"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <i class="fa" t-att-class="record.icon.raw_value"></i>
+                                            <span><field name="name"/></span>
+                                        </div>
+                                        <div class="o_secondary">
+                                            <span class="badge badge-pill badge-info">
+                                                <field name="code"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_card_body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small class="text-muted">Sales Orders</small>
+                                            <div class="h6">
+                                                <field name="max_sales_orders"/> 
+                                                <small class="text-muted">max</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted">Invoices</small>
+                                            <div class="h6">
+                                                <field name="max_invoices"/> 
+                                                <small class="text-muted">max</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-6">
+                                            <small class="text-muted">Price</small>
+                                            <div class="h6 text-success">
+                                                <field name="price" widget="monetary"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted">Users</small>
+                                            <div class="h6">
+                                                <field name="user_count"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Subscription Plan Search View -->
+        <record id="view_subscription_plan_search" model="ir.ui.view">
+            <field name="name">subscription.plan.search</field>
+            <field name="model">subscription.plan</field>
+            <field name="arch" type="xml">
+                <search string="Search Subscription Plans">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <filter string="Monthly" name="monthly" domain="[('duration_type', '=', 'monthly')]"/>
+                    <filter string="Quarterly" name="quarterly" domain="[('duration_type', '=', 'quarterly')]"/>
+                    <filter string="Yearly" name="yearly" domain="[('duration_type', '=', 'yearly')]"/>
+                    <filter string="Unlimited" name="unlimited" domain="[('duration_type', '=', 'unlimited')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Duration Type" name="duration_type" context="{'group_by': 'duration_type'}"/>
+                        <filter string="Active" name="group_active" context="{'group_by': 'active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Subscription Plan Action -->
+        <record id="action_subscription_plan" model="ir.actions.act_window">
+            <field name="name">Subscription Plans</field>
+            <field name="res_model">subscription.plan</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first subscription plan!
+                </p>
+                <p>
+                    Define subscription plans with different limits for sales orders and invoices.
+                    Each plan can have its own pricing, duration, and features.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 

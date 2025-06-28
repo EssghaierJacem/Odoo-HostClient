@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default Subscription Plans -->
+        <record id="subscription_plan_basic" model="subscription.plan">
+            <field name="name">Basic Plan</field>
+            <field name="code">BASIC</field>
+            <field name="description">Perfect for small businesses starting with Odoo</field>
+            <field name="max_sales_orders">10</field>
+            <field name="max_invoices">10</field>
+            <field name="price">29.00</field>
+            <field name="duration_type">monthly</field>
+            <field name="features">• Up to 10 Sales Orders per month
+• Up to 10 Invoices per month
+• Basic support
+• Standard features</field>
+            <field name="color">#28a745</field>
+            <field name="icon">fa-star</field>
+        </record>
+
+        <record id="subscription_plan_professional" model="subscription.plan">
+            <field name="name">Professional Plan</field>
+            <field name="code">PRO</field>
+            <field name="description">Ideal for growing businesses with moderate usage</field>
+            <field name="max_sales_orders">50</field>
+            <field name="max_invoices">50</field>
+            <field name="price">79.00</field>
+            <field name="duration_type">monthly</field>
+            <field name="features">• Up to 50 Sales Orders per month
+• Up to 50 Invoices per month
+• Priority support
+• Advanced features
+• Custom integrations</field>
+            <field name="color">#007bff</field>
+            <field name="icon">fa-star-half-o</field>
+        </record>
+
+        <record id="subscription_plan_enterprise" model="subscription.plan">
+            <field name="name">Enterprise Plan</field>
+            <field name="code">ENTERPRISE</field>
+            <field name="description">For large businesses with high volume requirements</field>
+            <field name="max_sales_orders">200</field>
+            <field name="max_invoices">200</field>
+            <field name="price">199.00</field>
+            <field name="duration_type">monthly</field>
+            <field name="features">• Up to 200 Sales Orders per month
+• Up to 200 Invoices per month
+• 24/7 Premium support
+• All advanced features
+• Custom development
+• Dedicated account manager</field>
+            <field name="color">#dc3545</field>
+            <field name="icon">fa-star-o</field>
+        </record>
+
+        <record id="subscription_plan_unlimited" model="subscription.plan">
+            <field name="name">Unlimited Plan</field>
+            <field name="code">UNLIMITED</field>
+            <field name="description">Unlimited usage for enterprise customers</field>
+            <field name="max_sales_orders">0</field>
+            <field name="max_invoices">0</field>
+            <field name="price">499.00</field>
+            <field name="duration_type">monthly</field>
+            <field name="features">• Unlimited Sales Orders
+• Unlimited Invoices
+• 24/7 Premium support
+• All features included
+• Custom development
+• Dedicated account manager
+• SLA guarantees</field>
+            <field name="color">#6f42c1</field>
+            <field name="icon">fa-diamond</field>
+        </record>
+
+        <!-- Cron Job for Expired Subscriptions -->
+        <record id="ir_cron_check_expired_subscriptions" model="ir.cron">
+            <field name="name">Check Expired Subscriptions</field>
+            <field name="model_id" ref="model_subscription_user"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_check_expired_subscriptions()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo> 

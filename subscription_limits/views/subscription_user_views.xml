@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Subscription User Tree View -->
+        <record id="view_subscription_user_tree" model="ir.ui.view">
+            <field name="name">subscription.user.tree</field>
+            <field name="model">subscription.user</field>
+            <field name="arch" type="xml">
+                <tree string="Subscription Users" 
+                      decoration-success="state == 'active'"
+                      decoration-warning="state == 'suspended'"
+                      decoration-danger="state == 'expired'"
+                      decoration-info="state == 'draft'">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="plan_id"/>
+                    <field name="state" widget="badge" 
+                           decoration-success="state == 'active'"
+                           decoration-warning="state == 'suspended'"
+                           decoration-danger="state == 'expired'"
+                           decoration-info="state == 'draft'"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="sales_orders_count" widget="integer"/>
+                    <field name="invoices_count" widget="integer"/>
+                    <field name="sales_orders_remaining" widget="integer"/>
+                    <field name="invoices_remaining" widget="integer"/>
+                    <field name="total_paid" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Subscription User Form View -->
+        <record id="view_subscription_user_form" model="ir.ui.view">
+            <field name="name">subscription.user.form</field>
+            <field name="model">subscription.user</field>
+            <field name="arch" type="xml">
+                <form string="Subscription User">
+                    <header>
+                        <button name="action_activate" type="object" 
+                                string="Activate" class="btn-primary"
+                                invisible="state != 'draft'"/>
+                        <button name="action_suspend" type="object" 
+                                string="Suspend" class="btn-warning"
+                                invisible="state != 'active'"/>
+                        <button name="action_cancel" type="object" 
+                                string="Cancel" class="btn-danger"
+                                invisible="state not in ['active', 'suspended']"/>
+                        <button name="action_renew" type="object" 
+                                string="Renew" class="btn-success"
+                                invisible="state not in ['active', 'expired']"/>
+                        <field name="state" widget="statusbar" 
+                               statusbar_visible="draft,active,suspended,expired,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="partner_id"/>
+                                <field name="plan_id"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="last_renewal_date"/>
+                            </group>
+                            <group>
+                                <field name="total_paid" widget="monetary"/>
+                                <field name="currency_id"/>
+                                <field name="notification_sent"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Usage Statistics" name="usage">
+                                <group>
+                                    <group string="Sales Orders">
+                                        <field name="sales_orders_count" readonly="1"/>
+                                        <field name="sales_orders_remaining" readonly="1"/>
+                                    </group>
+                                    <group string="Invoices">
+                                        <field name="invoices_count" readonly="1"/>
+                                        <field name="invoices_remaining" readonly="1"/>
+                                    </group>
+                                </group>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Sales Orders Usage</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar">
+                                                        <field name="sales_orders_count"/> / <field name="plan_max_sales_orders"/>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-2">
+                                                    <field name="sales_orders_remaining"/> remaining
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Invoices Usage</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar">
+                                                        <field name="invoices_count"/> / <field name="plan_max_invoices"/>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-2">
+                                                    <field name="invoices_remaining"/> remaining
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </page>
+                            <page string="Sales Orders" name="sales_orders">
+                                <field name="sale_order_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="amount_total" widget="monetary"/>
+                                        <field name="state"/>
+                                        <field name="date_order"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Invoices" name="invoices">
+                                <field name="invoice_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="amount_total" widget="monetary"/>
+                                        <field name="state"/>
+                                        <field name="invoice_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Subscription User Kanban View -->
+        <record id="view_subscription_user_kanban" model="ir.ui.view">
+            <field name="name">subscription.user.kanban</field>
+            <field name="model">subscription.user</field>
+            <field name="arch" type="xml">
+                <kanban string="Subscription Users" class="o_kanban_small_column" 
+                        default_group_by="state" 
+                        sample="1">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="plan_id"/>
+                    <field name="state"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="sales_orders_count"/>
+                    <field name="invoices_count"/>
+                    <field name="sales_orders_remaining"/>
+                    <field name="invoices_remaining"/>
+                    <field name="total_paid"/>
+                    <field name="currency_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <span><field name="user_id"/></span>
+                                        </div>
+                                        <div class="o_secondary">
+                                            <span class="badge badge-pill">
+                                                <field name="state"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_card_body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <small class="text-muted">Plan</small>
+                                            <div class="h6">
+                                                <field name="plan_id"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small class="text-muted">Sales Orders</small>
+                                            <div class="h6">
+                                                <field name="sales_orders_count"/> / <field name="plan_max_sales_orders"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted">Invoices</small>
+                                            <div class="h6">
+                                                <field name="invoices_count"/> / <field name="plan_max_invoices"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-12">
+                                            <small class="text-muted">Total Paid</small>
+                                            <div class="h6 text-success">
+                                                <field name="total_paid" widget="monetary"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Subscription User Search View -->
+        <record id="view_subscription_user_search" model="ir.ui.view">
+            <field name="name">subscription.user.search</field>
+            <field name="model">subscription.user</field>
+            <field name="arch" type="xml">
+                <search string="Search Subscription Users">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="plan_id"/>
+                    <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Suspended" name="suspended" domain="[('state', '=', 'suspended')]"/>
+                    <filter string="Expired" name="expired" domain="[('state', '=', 'expired')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Low Usage" name="low_usage" 
+                            domain="[('sales_orders_remaining', '&gt;', 5), ('invoices_remaining', '&gt;', 5)]"/>
+                    <filter string="High Usage" name="high_usage" 
+                            domain="[('sales_orders_remaining', '&lt;=', 3), ('invoices_remaining', '&lt;=', 3)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Plan" name="plan" context="{'group_by': 'plan_id'}"/>
+                        <filter string="User" name="user" context="{'group_by': 'user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Subscription User Action -->
+        <record id="action_subscription_user" model="ir.actions.act_window">
+            <field name="name">Subscription Users</field>
+            <field name="res_model">subscription.user</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first user subscription!
+                </p>
+                <p>
+                    Assign subscription plans to users and track their usage of sales orders and invoices.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 
